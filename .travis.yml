@@ -22,11 +22,14 @@ script:
   - docker build -t reverseproxy ./reverseproxy
 
 # Tagging
-- docker tag udagram-api-user dnlatt/udagram-api-user:v1
-- docker tag udagram-api-feed dnlatt/udagram-api-feed:v1
-- docker tag udagram-frontend dnlatt/udagram-frontend:v1
-- docker tag reverseproxy dnlatt/reverseproxy:v1
+  - docker tag udagram-api-user dnlatt/udagram-api-user:v1
+  - docker tag udagram-api-feed dnlatt/udagram-api-feed:v1
+  - docker tag udagram-frontend dnlatt/udagram-frontend:v1
+  - docker tag reverseproxy dnlatt/reverseproxy:v1
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push dnlatt/simple-node
+  - docker push dnlatt/udagram-api-user:v1
+  - docker push dnlatt/udagram-api-feed:v1
+  - docker push dnlatt/udagram-frontend:v1
+  - docker push dnlatt/reverseproxy:v1
