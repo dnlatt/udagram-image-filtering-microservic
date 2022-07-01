@@ -20,7 +20,7 @@ install:
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push dnlatt/udagram-api-user:v1
-  - docker push dnlatt/udagram-api-feed:v1
-  - docker push dnlatt/reverseproxy:v1
-  - docker push dnlatt/udagram-frontend:v1
+  - docker push dnlatt/udagram-api-user
+  - docker push dnlatt/udagram-api-feed
+  - docker push dnlatt/reverseproxy
+  - docker push dnlatt/udagram-frontend
