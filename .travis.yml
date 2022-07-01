@@ -4,7 +4,7 @@ services: docker
 
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
-
+  
 before_install:
 
   - docker -v && docker-compose -v
@@ -12,23 +12,9 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-  - chmod +x ./kubectl
-  - sudo mv ./kubectl /usr/local/bin/kubectl
   
-# Build
-script:
-  - docker --version # print the version for logging
-  - docker build -t udagram-api-user .
-  - docker build -t udagram-api-feed .
-  - docker build -t udagram-frontend .
-  - docker build -t reverseproxy .
-
-# Tagging
-- docker tag udagram-api-user dnlatt/udagram-api-user:v1
-- docker tag udagram-api-feed dnlatt/udagram-api-feed:v1
-- docker tag udagram-frontend dnlatt/udagram-frontend:v1
-- docker tag reverseproxy dnlatt/reverseproxy:v1
+install:
+  - docker-compose -f docker-compose-build.yml build --parallel
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
